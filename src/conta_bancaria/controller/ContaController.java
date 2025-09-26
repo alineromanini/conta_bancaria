@@ -23,26 +23,50 @@ public class ContaController implements ContaRepository {
 
 	@Override
 	public void cadastrar(Conta conta) {
-		listaContas.add(conta); //pra adicionar o numero da conta na coleção listaContas
-		System.out.println("Conta cadastrada com sucesso!");
+		listaContas.add(conta); // pra adicionar o numero da conta na coleção listaContas
+		System.out.println("\n 🙌 Conta cadastrada com sucesso!"); //Windows + . para colocar emoji
 
 	}
 
 	@Override
 	public void atualizar(Conta conta) {
-		// TODO Auto-generated method stub
+		var buscarConta = buscarNaCollection(conta.getNumero());
+		
+		if(buscarConta != null) {
+				listaContas.set(listaContas.indexOf(buscarConta), conta); //o array listaContas altera através da collection set
+				//o dado (conta)
+				System.out.printf("A conta número: %d foi atualizada com sucesso!\n", conta.getNumero());
+		
+		} else {
+			System.out.printf("A conta número: %d não foi atualizada com sucesso!", conta.getNumero());
+		}
+
 
 	}
 
 	@Override
 	public void procurarPorNumero(int numero) {
-		// TODO Auto-generated method stub
+
+
+		var conta = buscarNaCollection(numero);
+		if(conta != null) {
+			conta.visualizar();
+		} else {
+			System.out.printf("A conta número: %d nã foi encontrada!\n", numero);
+		}
 
 	}
 
 	@Override
 	public void deletar(int numero) {
-		// TODO Auto-generated method stub
+		var conta = buscarNaCollection(numero);
+		if(conta != null) {
+			if(listaContas.remove(conta) == true){
+				System.out.printf("\n A conta número %d foi deletada com sucesso!", numero);
+			}
+		} else {
+			System.out.printf("A conta número: %d nã foi encontrada!\n", numero);
+		}
 
 	}
 
@@ -63,5 +87,23 @@ public class ContaController implements ContaRepository {
 		// TODO Auto-generated method stub
 
 	}
+	
+	//Métodos auxiliares 
+	//para gerar os numeros das contas automaticamente
+	
+	public int gerarNumero() {
+		return ++ numero;
+	}
 
+	//para comparar conta
+	public Conta buscarNaCollection(int numero) {
+		for(var conta : listaContas) {
+			if(conta.getNumero() == numero) { //vai comparar o numero da conta com os dados da coleção
+				return conta; //se for igual vai 
+				//exibir a conta
+			}
+		}
+		
+		return null; //return pertencente ao FOR e nao ao IF
+	}
 }

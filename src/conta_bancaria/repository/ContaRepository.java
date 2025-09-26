@@ -2,11 +2,11 @@ package conta_bancaria.repository;
 
 import conta_bancaria.model.Conta;
 
-public interface ContaRepository {
+public interface ContaRepository { // a interface ja é abstrata por natureza, entao nao precisa colocar o abstract
 
 	// Métodos do CRUD
 
-	public void listarTodas(); // a interface ja é abstrata por natureza, entao nao precisa colocar o abstract
+	public void listarTodas(); 
 	public void cadastrar(Conta conta);
 	public void atualizar(Conta conta);
 	public void procurarPorNumero(int numero);
