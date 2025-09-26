@@ -35,10 +35,10 @@ public class ContaController implements ContaRepository {
 		if(buscarConta != null) {
 				listaContas.set(listaContas.indexOf(buscarConta), conta); //o array listaContas altera através da collection set
 				//o dado (conta)
-				System.out.printf("A conta número: %d foi atualizada com sucesso!\n", conta.getNumero());
+				System.out.printf("A conta número %d foi atualizada com sucesso!\n", conta.getNumero());
 		
 		} else {
-			System.out.printf("A conta número: %d não foi atualizada com sucesso!", conta.getNumero());
+			System.out.printf("A conta número %d não foi atualizada com sucesso!", conta.getNumero());
 		}
 
 
@@ -52,7 +52,7 @@ public class ContaController implements ContaRepository {
 		if(conta != null) {
 			conta.visualizar();
 		} else {
-			System.out.printf("A conta número: %d nã foi encontrada!\n", numero);
+			System.out.printf("A conta número %d não foi encontrada!\n", numero);
 		}
 
 	}
@@ -65,14 +65,14 @@ public class ContaController implements ContaRepository {
 				System.out.printf("\n A conta número %d foi deletada com sucesso!", numero);
 			}
 		} else {
-			System.out.printf("A conta número: %d nã foi encontrada!\n", numero);
+			System.out.printf("A conta número %d não foi encontrada!\n", numero);
 		}
 
 	}
 
 	@Override
 	public void sacar(int numero, float valor) {
-		// TODO Auto-generated method stub
+		
 
 	}
 

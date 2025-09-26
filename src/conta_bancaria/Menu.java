@@ -15,8 +15,8 @@ public class Menu {
 																// static é para não precisar instanciar os objetos
 	// final é pra definir uma variável constante
 
-	private static final ContaController contaController = new ContaController(); // cria objeto contaCntroller para ter
-																					// acesso a todos
+	private static final ContaController contaController = new ContaController(); // cria objeto contaController para
+																					// ter acesso a todos
 	// os métodos da ContaController
 
 	public static void main(String[] args) {
@@ -59,7 +59,8 @@ public class Menu {
 			}
 
 			if (opcao == 0) {
-				System.out.println(Cores.TEXT_WHITE_BOLD + "\nBanco DigiPay - A sua Independência começa aqui!");
+				System.out.println(Cores.TEXT_BLUE_BOLD + "\nBanco DigiPay - A sua Independência começa aqui!");
+				System.out.println(Cores.TEXT_RESET);
 				sobre();
 				leia.close();
 				System.exit(0);
@@ -84,6 +85,7 @@ public class Menu {
 				break;
 			case 4:
 				System.out.println(Cores.TEXT_WHITE_BOLD + "Atualizar dados da conta\n");
+				atualizarConta();
 				keypress();
 				break;
 			case 5:
@@ -104,7 +106,7 @@ public class Menu {
 				keypress();
 				break;
 			default:
-				System.out.println(Cores.TEXT_RED_BOLD + "\n Opção Inválida!\n" + Cores.TEXT_RESET);
+				System.out.println(Cores.TEXT_RED_BOLD + "Opção Inválida!\n" + Cores.TEXT_RESET);
 				keypress();
 				break;
 
@@ -113,11 +115,11 @@ public class Menu {
 	}
 
 	public static void sobre() {
-		System.out.println("\n*************************************************");
-		System.out.println("\nProjeto Desenvolvido por: Aline Romanini");
+		System.out.println("*************************************************");
+		System.out.println("\nProjeto Desenvolvido por: Aline Romanini da Silva");
 		System.out.println("Generation Brasil - AlineSi@genstudents.org");
 		System.out.println("https://github.com/alineromanini");
-		System.out.println("***********************************************************");
+		System.out.println("**************************************************");
 	}
 
 	public static void keypress() {
@@ -138,43 +140,39 @@ public class Menu {
 	}
 
 	private static void cadastrarConta() {
-		
-		System.out.println("Digite o número da conta");
-		int numero = leia.nextInt();
-		
+
 		System.out.println("Digite o número da agência");
 		int agencia = leia.nextInt();
-		
-		System.out.println("Digite o tipo da conta (1- Conta corrente | 2 - Conta Poupança");
+
+		System.out.println("Digite o tipo da conta (1- Conta corrente | 2 - Conta Poupança)");
 		int tipo = leia.nextInt();
-		
+
 		System.out.println("Digite o nome do titular");
-		leia.skip("\\R"); 
+		leia.skip("\\R");
 		String titular = leia.nextLine();
-		
+
 		System.out.println("Digite o saldo inicial");
 		float saldo = leia.nextFloat();
-		
-		switch(tipo) {
+
+		switch (tipo) {
 		case 1 -> {
 			System.out.println("Digite o limite inicial: ");
 			float limite = leia.nextFloat();
-			contaController.cadastrar(new ContaCorrente(contaController.gerarNumero(), agencia, tipo, titular, saldo, limite ));
+			contaController
+					.cadastrar(new ContaCorrente(contaController.gerarNumero(), agencia, tipo, titular, saldo, limite));
 		}
-		
-			case 2 -> {
-				System.out.println("Digite o aniversário da conta: ");
-				int aniversario = leia.nextInt();
-						contaController.cadastrar(new ContaPoupanca(contaController.gerarNumero(),agencia, tipo,titular, saldo, aniversario ));
-			}
-			
-			default -> System.out.println(Cores.TEXT_BLACK + "Tipo de conta inválido!" + Cores.TEXT_RESET);
-			
-			
-		}
-		
 
-		
+		case 2 -> {
+			System.out.println("Digite o aniversário da conta: ");
+			int aniversario = leia.nextInt();
+			contaController.cadastrar(
+					new ContaPoupanca(contaController.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
+		}
+
+		default -> System.out.println(Cores.TEXT_RED + "Tipo de conta inválido!" + Cores.TEXT_RESET);
+
+		}
+
 	}
 
 	private static void procurarContaPorNumero() {
@@ -208,8 +206,6 @@ public class Menu {
 			System.out.printf("\nA conta número %d não foi encontrada!", numero);
 		}
 	}
-		
-	
 
 	private static void atualizarConta() {
 		System.out.println("Digite o número da conta: ");
@@ -219,51 +215,53 @@ public class Menu {
 		Conta conta = contaController.buscarNaCollection(numero);
 
 		if (conta != null) {
-			int agencia = conta.getAgencia(); //pega o valor atual da colecao
+			int agencia = conta.getAgencia(); // pega o valor atual da colecao
 			String titular = conta.getTitular();
 			int tipo = conta.getTipo();
 			float saldo = conta.getSaldo();
-			
-			System.out.printf("A Agência atual: %d\nNova Agência (Pressione ENTER para manter o valor atual): ", agencia);
+
+			System.out.printf("A Agência atual: %d\nNova Agência (Pressione ENTER para manter o valor atual): ",
+					agencia);
 			String entrada = leia.nextLine();
-			agencia = entrada.isEmpty() ? agencia : Integer.parseInt(entrada); //if
-			
-			System.out.printf("O nome do Titular atual: %s\nNovo Titular (Pressione ENTER para manter o valor atual): ", titular);
+			agencia = entrada.isEmpty() ? agencia : Integer.parseInt(entrada); // if
+
+			System.out.printf("\nO nome do Titular atual: %s\nNovo Titular (Pressione ENTER para manter o valor atual): ",
+					titular);
 			entrada = leia.nextLine();
 			titular = entrada.isEmpty() ? titular : entrada;
-						
-			System.out.printf("O Saldo atual: %.2f\nNovo Saldo (Pressione ENTER para manter o valor atual): ", saldo);
+
+			System.out.printf("\nO Saldo atual: %.2f\nNovo Saldo (Pressione ENTER para manter o valor atual): ", saldo);
 			entrada = leia.nextLine();
 			saldo = entrada.isEmpty() ? saldo : Float.parseFloat(entrada);
-			
-			switch(tipo) {
-			case 1 ->{
-				float limite = ((ContaCorrente) conta).getLimite();//casting pra fazer a conta passar pra conta corrente
-				
-				
-				System.out.printf("O Limite atual é: %.2f\nNovo Limite (Pressione ENTER para manter o valor atual): ", limite);
+
+			switch (tipo) {
+			case 1 -> {
+				float limite = ((ContaCorrente) conta).getLimite();// casting pra fazer a conta passar pra conta
+																	// corrente
+
+				System.out.printf("\nO Limite atual é: %.2f\nNovo Limite (Pressione ENTER para manter o valor atual): ",
+						limite);
 				entrada = leia.nextLine();
 				limite = entrada.isEmpty() ? limite : Float.parseFloat(entrada);
 				contaController.atualizar(new ContaCorrente(numero, agencia, tipo, titular, saldo, limite));
 			}
 			case 2 -> {
-				
+
 				int aniversario = ((ContaPoupanca) conta).getAniversario();
-				
-				System.out.printf("O Aniversário atual é: %d\nNovo Aniversário (Pressione ENTER para manter o valor atual): ", aniversario);
+
+				System.out.printf(
+						"\nO Aniversário atual é: %d\nNovo Aniversário (Pressione ENTER para manter o valor atual): ",
+						aniversario);
 				entrada = leia.nextLine();
 				aniversario = entrada.isEmpty() ? aniversario : Integer.parseInt(entrada);
 				contaController.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario));
 			}
 			default -> System.out.println(Cores.TEXT_RED + "Tipo de conta inválido!" + Cores.TEXT_RESET);
 			}
- 
-			
-		}else {
+
+		} else {
 			System.out.printf("\nA conta número %d não foi encontrada!", numero);
 		}
-	
 
-		
-		}
 	}
+}
